@@ -19,6 +19,11 @@ set_property(TARGET main PROPERTY FOLDER "executables")
 set_target_properties(main PROPERTIES
                       RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
+# Copies SFML dlls
+add_custom_command(TARGET main POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+					${CONAN_SFML_ROOT_RELEASE}/bin/ $<TARGET_FILE_DIR:main>)
+
 # Adds logic to INSTALL.vcproj to copy app.exe to destination directory
 install (TARGETS main
          RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/_install)

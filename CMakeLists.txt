@@ -15,4 +15,4 @@ conan_basic_setup()
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(main)
 add_subdirectory(ModuleWindow)
-
+add_subdirectory(ModuleRendering)

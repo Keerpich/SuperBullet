@@ -25,7 +25,7 @@ void SuperBullet::Window::Clear()
 	mWindow.clear();
 }
 
-void SuperBullet::Window::Draw(const sf::Drawable &drawable)
+void SuperBullet::Window::Draw(const SuperBullet::Drawable &drawable)
 {
 	mWindow.draw(drawable);
 }

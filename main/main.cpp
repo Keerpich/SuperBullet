@@ -1,12 +1,11 @@
 #include "../ModuleWindow/include/Window.h"
-
-#include "SFML/Graphics.hpp"
+#include "../ModuleRendering/include/CircleShape.h"	
 
 int main()
 {
 	SuperBullet::Window window;
 
-	sf::CircleShape shape(100.f);
+	SuperBullet::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
 	window.RegisterEventCallback(

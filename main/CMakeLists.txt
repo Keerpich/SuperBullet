@@ -4,13 +4,23 @@
 add_executable (main main.cpp)
 
 add_dependencies(main ModuleWindow)
+add_dependencies(main ModuleRendering)
 
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})
-    target_link_libraries(main optimized ${_LIB} optimized ${PROJECT_BINARY_DIR}/ModuleWindow/Release/ModuleWindow.lib)
+    target_link_libraries(main 
+		optimized ${_LIB} 
+		optimized ${PROJECT_BINARY_DIR}/ModuleWindow/Release/ModuleWindow.lib 
+		optimized ${PROJECT_BINARY_DIR}/ModuleRendering/Release/ModuleRendering.lib
+	)
 endforeach()
 foreach(_LIB ${CONAN_LIBS_DEBUG})
-    target_link_libraries(main debug ${_LIB} debug ${PROJECT_BINARY_DIR}/ModuleWindow/Debug/ModuleWindow.lib)
+    target_link_libraries(main 
+		debug ${_LIB} 
+		debug ${PROJECT_BINARY_DIR}/ModuleWindow/Debug/ModuleWindow.lib 
+		debug ${PROJECT_BINARY_DIR}/ModuleRendering/Debug/ModuleRendering.lib
+	)
+	
 endforeach()
 
 # Creates a folder "executables" and adds target

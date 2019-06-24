@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "../../ModuleRendering/include/Drawable.h"
 
 #include <memory>
 #include <functional>
@@ -28,9 +28,7 @@ namespace SuperBullet
 		void Close();
 
 		void Clear();
-		///TODO: Replace the parameter with a more abstract one
-		///once we implement a GFX module
-		void Draw(const sf::Drawable &drawable);
+		void Draw(const SuperBullet::Drawable &drawable);
 		void Display();
 
 		void PollEvents();

@@ -1,23 +1,24 @@
 # Set Properties->General->Configuration Type to DLL
-add_library (ModuleWindow STATIC include/Window.h source/Window.cpp)
-
-add_dependencies(ModuleWindow ModuleRendering)
+add_library (ModuleRendering STATIC 
+	include/Drawable.h 
+	source/Drawable.cpp
+	include/CircleShape.h
+	source/CircleShape.cpp
+)
 
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})
-    target_link_libraries(ModuleWindow optimized ${_LIB})
+    target_link_libraries(ModuleRendering optimized ${_LIB})
 endforeach()
 foreach(_LIB ${CONAN_LIBS_DEBUG})
-    target_link_libraries(ModuleWindow debug ${_LIB})
+    target_link_libraries(ModuleRendering debug ${_LIB})
 endforeach()
-
-add_definitions(-DMODULEWINDOW_EXPORTS)
 
 # Creates a folder "executables" and adds target
 # project (app.vcproj) under it
-set_property(TARGET ModuleWindow PROPERTY FOLDER "executables")
+set_property(TARGET ModuleRendering PROPERTY FOLDER "executables")
 
 # Properties->General->Output Directory
-set_target_properties(ModuleWindow PROPERTIES
+set_target_properties(ModuleRendering PROPERTIES
                       RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 

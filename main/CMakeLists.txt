@@ -3,12 +3,14 @@
 # Adds sources to the Solution Explorer
 add_executable (main main.cpp)
 
+add_dependencies(main ModuleWindow)
+
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})
-    target_link_libraries(main optimized ${_LIB})
+    target_link_libraries(main optimized ${_LIB} optimized ${PROJECT_BINARY_DIR}/ModuleWindow/Release/ModuleWindow.lib)
 endforeach()
 foreach(_LIB ${CONAN_LIBS_DEBUG})
-    target_link_libraries(main debug ${_LIB})
+    target_link_libraries(main debug ${_LIB} debug ${PROJECT_BINARY_DIR}/ModuleWindow/Debug/ModuleWindow.lib)
 endforeach()
 
 # Creates a folder "executables" and adds target

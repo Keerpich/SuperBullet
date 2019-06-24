@@ -2,7 +2,7 @@
 
 #include "SFML/Graphics.hpp"
 
-namespace 
+namespace SuperBullet
 {
 	typedef sf::Sprite Sprite;
 }

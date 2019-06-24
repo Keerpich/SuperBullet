@@ -4,6 +4,12 @@ add_library (ModuleRendering STATIC
 	source/Drawable.cpp
 	include/CircleShape.h
 	source/CircleShape.cpp
+	include/Sprite.h
+	source/Sprite.cpp
+	include/RectangleShape.h
+	source/RectangleShape.cpp
+	include/ConvexShape.h
+	source/ConvexShape.cpp
 )
 
 # Properties->Linker->Input->Additional Dependencies

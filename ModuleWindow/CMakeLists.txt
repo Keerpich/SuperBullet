@@ -1,6 +1,8 @@
 # Set Properties->General->Configuration Type to DLL
 add_library (ModuleWindow STATIC include/Window.h source/Window.cpp)
 
+add_dependencies(ModuleWindow ModuleRendering)
+
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})
     target_link_libraries(ModuleWindow optimized ${_LIB})

@@ -10,6 +10,8 @@ add_library (ModuleRendering STATIC
 	source/RectangleShape.cpp
 	include/ConvexShape.h
 	source/ConvexShape.cpp
+	include/Texture.h
+	source/Texture.cpp
 )
 
 # Properties->Linker->Input->Additional Dependencies

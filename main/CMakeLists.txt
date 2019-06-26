@@ -1,10 +1,17 @@
 # Set Properties->General->Configuration Type to Application(.exe)
 # Creates app.exe with the listed sources (main.cxx)
 # Adds sources to the Solution Explorer
-add_executable (main main.cpp)
+
+file(GLOB main_files
+	"include/*.h"
+	"source/*.cpp"
+)
+
+add_executable (main ${main_files})
 
 add_dependencies(main ModuleWindow)
 add_dependencies(main ModuleRendering)
+add_dependencies(main Components)
 
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})
@@ -12,6 +19,7 @@ foreach(_LIB ${CONAN_LIBS_RELEASE})
 		optimized ${_LIB} 
 		optimized ${PROJECT_BINARY_DIR}/ModuleWindow/Release/ModuleWindow.lib 
 		optimized ${PROJECT_BINARY_DIR}/ModuleRendering/Release/ModuleRendering.lib
+		optimized ${PROJECT_BINARY_DIR}/Components/Release/Components.lib
 	)
 endforeach()
 foreach(_LIB ${CONAN_LIBS_DEBUG})
@@ -19,6 +27,7 @@ foreach(_LIB ${CONAN_LIBS_DEBUG})
 		debug ${_LIB} 
 		debug ${PROJECT_BINARY_DIR}/ModuleWindow/Debug/ModuleWindow.lib 
 		debug ${PROJECT_BINARY_DIR}/ModuleRendering/Debug/ModuleRendering.lib
+		debug ${PROJECT_BINARY_DIR}/Components/Debug/Components.lib
 	)
 	
 endforeach()

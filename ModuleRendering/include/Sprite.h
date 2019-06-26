@@ -4,5 +4,5 @@
 
 namespace SuperBullet
 {
-	typedef sf::Sprite Sprite;
+	using Sprite = sf::Sprite;
 }

@@ -1,5 +1,10 @@
+file(GLOB module_files
+	"include/*.h"
+	"source/*.cpp"
+)
+
 # Set Properties->General->Configuration Type to DLL
-add_library (ModuleWindow STATIC include/Window.h source/Window.cpp)
+add_library (ModuleWindow STATIC ${module_files})
 
 add_dependencies(ModuleWindow ModuleRendering)
 

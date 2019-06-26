@@ -2,5 +2,5 @@
 
 namespace SuperBullet
 {
-	typedef sf::Texture Texture;
+	using Texture = sf::Texture;
 }

@@ -4,5 +4,5 @@
 
 namespace SuperBullet
 {
-	typedef sf::CircleShape CircleShape;
+	using CircleShape = sf::CircleShape;
 }

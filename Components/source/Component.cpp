@@ -2,13 +2,23 @@
 
 namespace SuperBullet
 {
-	IComponent::IComponent() : 
-		Drawable()
+	void Component::Draw(RenderTarget& target, RenderStates states) const
 	{
+		for (const DrawablePtr& drawable : mDrawables)
+			target.draw(*drawable, states);
 	}
 
-	void IComponent::Draw(RenderTarget& target, RenderStates states)
+	void Component::AddDrawable(std::shared_ptr<Drawable> drawable)
 	{
-		draw(target, states);
+		mDrawables.push_back(drawable);
+	}
+
+	void Component::RemoveDrawable(std::shared_ptr<Drawable> drawable)
+	{
+		std::list<DrawablePtr>::iterator it =
+			std::find(mDrawables.begin(), mDrawables.end(), drawable);
+
+		if (it != mDrawables.end())
+			mDrawables.erase(it);
 	}
 }

@@ -9,7 +9,6 @@
 namespace SuperBullet
 {
 	using Vector2f = sf::Vector2<float>;
-	using ComponentPtr = std::shared_ptr<IComponent>;
 
 	class Object final
 	{
@@ -23,7 +22,7 @@ namespace SuperBullet
 		void RemoveComponent(ComponentPtr component);
 
 		void Update(float deltaSeconds);
-		void Draw(RenderTarget& target, RenderStates states);
+		void Draw(RenderTarget& target, RenderStates states = RenderStates::Default) const;
 
 	private:
 		std::list<ComponentPtr> mComponents;

@@ -37,10 +37,11 @@ void SuperBullet::Object::Update(float deltaSeconds)
 	}
 }
 
-void SuperBullet::Object::Draw(RenderTarget& target, RenderStates states)
+void SuperBullet::Object::Draw(RenderTarget& target, RenderStates states) const
 {
-	for (ComponentPtr& component_ptr : mComponents)
+	for (const ComponentPtr& component_ptr : mComponents)
 	{
 		component_ptr->Draw(target, states);
 	}
 }
+

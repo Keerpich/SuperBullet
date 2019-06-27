@@ -6,6 +6,8 @@
 #include <functional>
 #include <map>
 
+#include "../../Components/include/Object.h"
+
 namespace SuperBullet
 {
 	enum class Event
@@ -28,21 +30,20 @@ namespace SuperBullet
 		void Close();
 
 		void Clear();
-		void Draw(const SuperBullet::Drawable &drawable);
+		void Draw(const SuperBullet::Object &drawable);
 		void Display();
 
 		void PollEvents();
 
 		using EventCallback = std::function<void()>;
-		
+
 		void RegisterEventCallback(Event e, EventCallback callback);
 		void UnregisterEventCallback(Event e, EventCallback callback);
-		
+
 	private:
 		sf::RenderWindow mWindow;
 
 		using EventCallbackList = std::list<std::function<void()>>;
 		std::map<Event, EventCallbackList> mCallbacks;
-
 	};
 }

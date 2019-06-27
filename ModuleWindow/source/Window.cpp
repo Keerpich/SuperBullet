@@ -25,9 +25,9 @@ void SuperBullet::Window::Clear()
 	mWindow.clear();
 }
 
-void SuperBullet::Window::Draw(const SuperBullet::Drawable &drawable)
+void SuperBullet::Window::Draw(const SuperBullet::Object &object)
 {
-	mWindow.draw(drawable);
+	object.Draw(mWindow);
 }
 
 void SuperBullet::Window::Display()

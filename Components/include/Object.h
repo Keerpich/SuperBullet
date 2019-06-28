@@ -30,6 +30,7 @@ namespace SuperBullet
 		void Update(float deltaSeconds);
 		void Draw(RenderTarget& target, RenderStates states = RenderStates::Default) const;
 
+		void SetPosition(const Vector2f& position);
 		Vector2f GetPosition() const;
 
 	private:

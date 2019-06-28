@@ -46,6 +46,11 @@ void SuperBullet::Object::Draw(RenderTarget& target, RenderStates states) const
 	}
 }
 
+void SuperBullet::Object::SetPosition(const Vector2f & position)
+{
+	mPosition = position;
+}
+
 SuperBullet::Vector2f SuperBullet::Object::GetPosition() const
 {
 	return mPosition;

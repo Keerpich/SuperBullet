@@ -57,6 +57,16 @@ namespace SuperBullet
 			mDrawables.erase(it);
 	}
 
+	void Component::SetPosition(const Vector2f & position)
+	{
+		mPosition = position;
+	}
+
+	void Component::SetWorldPosition(const Vector2f & position)
+	{
+		mPosition = position - GetWorldPosition();
+	}
+
 	Vector2f Component::GetPosition() const
 	{
 		return mPosition;

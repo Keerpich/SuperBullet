@@ -36,6 +36,9 @@ namespace SuperBullet
 		void AddDrawable(std::shared_ptr<Drawable> drawable);
 		void RemoveDrawable(std::shared_ptr<Drawable> drawable);
 
+		void SetPosition(const Vector2f& position);
+		void SetWorldPosition(const Vector2f& position);
+
 		Vector2f GetPosition() const;
 		Vector2f GetWorldPosition();
 		Vector2f GetOwnerPosition() const;

@@ -1,4 +1,5 @@
 #include "..\include\Object.h"
+#include "..\include\Component.h"
 
 SuperBullet::Object::Object() :
 	mPosition(0.f, 0.f)
@@ -6,7 +7,7 @@ SuperBullet::Object::Object() :
 }
 
 SuperBullet::Object::Object(const Vector2f& position) :
-	mPosition(position.x, position.y)
+	mPosition(position)
 {
 }
 
@@ -43,5 +44,10 @@ void SuperBullet::Object::Draw(RenderTarget& target, RenderStates states) const
 	{
 		component_ptr->Draw(target, states);
 	}
+}
+
+SuperBullet::Vector2f SuperBullet::Object::GetPosition() const
+{
+	return mPosition;
 }
 

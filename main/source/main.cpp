@@ -22,13 +22,15 @@ private:
 
 int main()
 {
+	using ComponentPtr = std::shared_ptr<SuperBullet::Component>;
+
 	SuperBullet::Window window;
 
 	SuperBullet::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
 	SuperBullet::Object obj;
-	SuperBullet::ComponentPtr circleComponent = std::static_pointer_cast<SuperBullet::Component>(std::make_shared<CircleComponent>(100.f, sf::Color::Green));
+	ComponentPtr circleComponent = std::static_pointer_cast<SuperBullet::Component>(std::make_shared<CircleComponent>(100.f, sf::Color::Green));
 	obj.AttachComponent(circleComponent);
 
 	window.RegisterEventCallback(

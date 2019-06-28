@@ -16,8 +16,6 @@ foreach(_LIB ${CONAN_LIBS_DEBUG})
     target_link_libraries(ModuleWindow debug ${_LIB})
 endforeach()
 
-add_definitions(-DMODULEWINDOW_EXPORTS)
-
 # Creates a folder "executables" and adds target
 # project (app.vcproj) under it
 set_property(TARGET ModuleWindow PROPERTY FOLDER "executables")

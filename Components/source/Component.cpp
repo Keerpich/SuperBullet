@@ -29,7 +29,7 @@ namespace SuperBullet
 			comp->Draw(target, states);
 	}
 
-	void Component::SetOwner(std::variant<ObjectPtr, ComponentPtr> owner)
+	void Component::SetOwner(OwnerVariant owner)
 	{
 		mOwner = owner;
 	}
@@ -37,10 +37,13 @@ namespace SuperBullet
 	void Component::AttachComponent(ComponentPtr component)
 	{
 		mComponents.push_back(component);
+		component->SetOwner(weak_from_this());
 	}
 
 	void Component::AttachComponents(std::list<ComponentPtr> components)
 	{
+		for (auto& comp : components)
+			comp->SetOwner(weak_from_this());
 		mComponents.insert(mComponents.end(), components.begin(), components.end());
 	}
 
@@ -73,14 +76,14 @@ namespace SuperBullet
 		if (!mWorldPositionCacheDirty)
 			return mCachedWorldPosition;
 
-		if (std::holds_alternative<ComponentPtr>(mOwner))
+		if (std::holds_alternative<std::weak_ptr<Component>>(mOwner))
 		{
-			ComponentPtr owner = std::get<ComponentPtr>(mOwner);
+			std::shared_ptr<Component> owner = std::get<std::weak_ptr<Component>>(mOwner).lock();
 			mCachedWorldPosition = owner->GetWorldPosition() + mPosition;
 		}
 		else
 		{
-			ObjectPtr owner = std::get<ObjectPtr>(mOwner);
+			std::shared_ptr<Object> owner = std::get<std::weak_ptr<Object>>(mOwner).lock();
 			mCachedWorldPosition = owner->GetPosition() + mPosition;
 		}
 
@@ -90,14 +93,14 @@ namespace SuperBullet
 
 	Vector2f Component::GetOwnerPosition() const
 	{
-		if (std::holds_alternative<ComponentPtr>(mOwner))
+		if (std::holds_alternative<std::weak_ptr<Component>>(mOwner))
 		{
-			ComponentPtr owner = std::get<ComponentPtr>(mOwner);
+			std::shared_ptr<Component> owner = std::get<std::weak_ptr<Component>>(mOwner).lock();
 			return owner->GetPosition();
 		}
 		else
 		{
-			ObjectPtr owner = std::get<ObjectPtr>(mOwner);
+			std::shared_ptr<Object> owner = std::get <std::weak_ptr<Object>>(mOwner).lock();
 			return owner->GetPosition();
 		}
 	}

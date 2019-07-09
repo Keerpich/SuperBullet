@@ -12,11 +12,11 @@ namespace SuperBullet
 {
 	class Object;
 
-	class Component
+	class Component : public std::enable_shared_from_this<Component>
 	{
 	private:
 		using ComponentPtr = std::shared_ptr<Component>;
-		using ObjectPtr = std::shared_ptr<Object>;
+		using OwnerVariant = std::variant<std::monostate, std::weak_ptr<Object>, std::weak_ptr<Component>>;
 
 	public:
 		Component();
@@ -27,7 +27,7 @@ namespace SuperBullet
 		virtual void Update(float deltaSeconds);
 		virtual void Draw(RenderTarget& target, RenderStates states) const;
 		
-		void SetOwner(std::variant<ObjectPtr, ComponentPtr> owner);
+		void SetOwner(OwnerVariant owner);
 
 		void AttachComponent(ComponentPtr component);
 		void AttachComponents(std::list<ComponentPtr> components);
@@ -46,7 +46,7 @@ namespace SuperBullet
 		Vector2f mCachedWorldPosition;
 		bool mWorldPositionCacheDirty = true;
 
-		std::variant<ObjectPtr, ComponentPtr> mOwner;
+		OwnerVariant mOwner;
 
 		std::list<ComponentPtr> mComponents;
 	};

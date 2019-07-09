@@ -14,7 +14,7 @@ namespace SuperBullet
 	constexpr float FPS = 60.f;
 	class Component;
 
-	class Object
+	class Object : public std::enable_shared_from_this<Object>
 	{
 	private:
 		using ComponentPtr = std::shared_ptr<Component>;
@@ -23,7 +23,7 @@ namespace SuperBullet
 		Object();
 		Object(const Vector2f &position);
 
-		~Object() = default;
+		virtual ~Object() = default;
 
 		void AttachComponent(ComponentPtr component);
 		void AttachComponents(std::list<ComponentPtr> components);

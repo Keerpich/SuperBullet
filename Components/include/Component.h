@@ -22,9 +22,9 @@ namespace SuperBullet
 		Component();
 		Component(const Vector2f &position);
 
-		~Component() = default;
+		virtual ~Component() = 0;
 
-		virtual void Update(float deltaSeconds) = 0;
+		virtual void Update(float deltaSeconds);
 		virtual void Draw(RenderTarget& target, RenderStates states) const;
 		
 		void SetOwner(std::variant<ObjectPtr, ComponentPtr> owner);
@@ -32,9 +32,6 @@ namespace SuperBullet
 		void AttachComponent(ComponentPtr component);
 		void AttachComponents(std::list<ComponentPtr> components);
 		void RemoveComponent(ComponentPtr component);
-
-		void AddDrawable(std::shared_ptr<Drawable> drawable);
-		void RemoveDrawable(std::shared_ptr<Drawable> drawable);
 
 		void SetPosition(const Vector2f& position);
 		void SetWorldPosition(const Vector2f& position);
@@ -52,6 +49,5 @@ namespace SuperBullet
 		std::variant<ObjectPtr, ComponentPtr> mOwner;
 
 		std::list<ComponentPtr> mComponents;
-		std::list<DrawablePtr> mDrawables;
 	};
 }

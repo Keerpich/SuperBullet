@@ -25,9 +25,9 @@ void SuperBullet::Window::Clear()
 	mWindow.clear();
 }
 
-void SuperBullet::Window::Draw(const SuperBullet::Object &object)
+void SuperBullet::Window::Draw(const std::shared_ptr<SuperBullet::Object> object)
 {
-	object.Draw(mWindow);
+	object->Draw(mWindow);
 }
 
 void SuperBullet::Window::Display()

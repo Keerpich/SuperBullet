@@ -9,9 +9,12 @@
 namespace SuperBullet
 {
 	using Vector2f = sf::Vector2<float>;
+	using Vector2i = sf::Vector2<int>;
+	using Vector2u = sf::Vector2u;
+	constexpr float FPS = 60.f;
 	class Component;
 
-	class Object final
+	class Object
 	{
 	private:
 		using ComponentPtr = std::shared_ptr<Component>;

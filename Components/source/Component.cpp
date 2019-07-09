@@ -13,10 +13,20 @@ namespace SuperBullet
 	{
 	}
 
+	Component::~Component()
+	{
+	}
+
+	void Component::Update(float deltaSeconds)
+	{
+		for (const ComponentPtr& comp : mComponents)
+			comp->Update(deltaSeconds);
+	}
+
 	void Component::Draw(RenderTarget& target, RenderStates states) const
 	{
-		for (const DrawablePtr& drawable : mDrawables)
-			target.draw(*drawable, states);
+		for (const ComponentPtr& comp : mComponents)
+			comp->Draw(target, states);
 	}
 
 	void Component::SetOwner(std::variant<ObjectPtr, ComponentPtr> owner)
@@ -41,20 +51,6 @@ namespace SuperBullet
 
 		if (it != mComponents.end())
 			mComponents.erase(it);
-	}
-
-	void Component::AddDrawable(std::shared_ptr<Drawable> drawable)
-	{
-		mDrawables.push_back(drawable);
-	}
-
-	void Component::RemoveDrawable(std::shared_ptr<Drawable> drawable)
-	{
-		std::list<DrawablePtr>::iterator it =
-			std::find(mDrawables.begin(), mDrawables.end(), drawable);
-
-		if (it != mDrawables.end())
-			mDrawables.erase(it);
 	}
 
 	void Component::SetPosition(const Vector2f & position)

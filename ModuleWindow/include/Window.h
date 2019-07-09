@@ -30,7 +30,7 @@ namespace SuperBullet
 		void Close();
 
 		void Clear();
-		void Draw(const SuperBullet::Object &drawable);
+		void Draw(const std::shared_ptr<Object> object);
 		void Display();
 
 		void PollEvents();

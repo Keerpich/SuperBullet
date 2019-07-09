@@ -14,10 +14,13 @@ SuperBullet::Object::Object(const Vector2f& position) :
 void SuperBullet::Object::AttachComponent(ComponentPtr component)
 {
 	mComponents.push_back(component);
+	component->SetOwner(std::shared_ptr<Object>(this));
 }
 
 void SuperBullet::Object::AttachComponents(std::list<ComponentPtr> components)
 {
+	for (auto comp : components)
+		comp->SetOwner(std::shared_ptr<Object>(this));
 	mComponents.insert(mComponents.end(), components.begin(), components.end());
 }
 

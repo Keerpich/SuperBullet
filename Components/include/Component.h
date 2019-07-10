@@ -7,6 +7,7 @@
 #include "../../ModuleRendering/include/RenderStates.h"
 #include "../../ModuleRendering/include/RenderTarget.h"
 #include "../../ModuleRendering/include/Drawable.h"
+#include "../../Utilities/include/Vector.h"
 
 namespace SuperBullet
 {
@@ -16,6 +17,8 @@ namespace SuperBullet
 	{
 	private:
 		using ComponentPtr = std::shared_ptr<Component>;
+
+	public:
 		using OwnerVariant = std::variant<std::monostate, std::weak_ptr<Object>, std::weak_ptr<Component>>;
 
 	public:
@@ -33,9 +36,10 @@ namespace SuperBullet
 		void AttachComponents(std::list<ComponentPtr> components);
 		void RemoveComponent(ComponentPtr component);
 
-		void SetPosition(const Vector2f& position);
-		void SetWorldPosition(const Vector2f& position);
+		virtual void SetPosition(const Vector2f& position);
+		virtual void SetWorldPosition(const Vector2f& position);
 
+		OwnerVariant GetOwner();
 		Vector2f GetPosition() const;
 		Vector2f GetWorldPosition();
 		Vector2f GetOwnerPosition() const;

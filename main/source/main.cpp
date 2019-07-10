@@ -22,7 +22,7 @@ int main()
 	SuperBullet::Window window;
 
 	window.RegisterEventCallback(
-		SuperBullet::Event::Closed,
+		SuperBullet::Event::EventType::Closed,
 		[&window]()
 		{
 			window.Close();
@@ -31,6 +31,7 @@ int main()
 
 	std::shared_ptr<SuperBullet::MainCharacter> character = 
 		std::make_shared<SuperBullet::MainCharacter>(SuperBullet::Vector2f(200.f, 200.f));
+	character->Initialize();
 
 	auto lastTime = std::chrono::system_clock::now();
 	constexpr float kFrameTime = 1.f / 60.f;

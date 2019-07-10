@@ -41,7 +41,7 @@ void SuperBullet::AnimatedSpriteComponent::AddAnimation(
 	const int32_t frame_width = spriteSheet.getSize().x / columns;
 	const int32_t frame_height = spriteSheet.getSize().y / lines;
 
-	int32_t frames = 0;
+	uint32_t frames = 0;
 
 	for (int32_t i = 0; i < lines; ++i)
 	{
@@ -70,4 +70,10 @@ void SuperBullet::AnimatedSpriteComponent::AddAnimation(
 void SuperBullet::AnimatedSpriteComponent::Play(const std::string & animationName)
 {
 	mAnimatedSprite->play(mAnimations[animationName]);
+}
+
+void SuperBullet::AnimatedSpriteComponent::SetPosition(const Vector2f & position)
+{	
+	Component::SetPosition(position);
+	mAnimatedSprite->setPosition(GetWorldPosition());
 }

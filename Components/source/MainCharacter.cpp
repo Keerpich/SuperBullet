@@ -1,11 +1,25 @@
 #include "..\include\MainCharacter.h"
+#include "..\include\InputMovementComponent.h"
 
 SuperBullet::MainCharacter::MainCharacter(const Vector2f & position) :
 	Object(position),
 	mSpriteComponent(std::make_shared<AnimatedSpriteComponent>(5.f, false, true, position))
 {
+}
+
+void SuperBullet::MainCharacter::Initialize()
+{
 	LoadRifleSpriteSheets();
+	
 	mSpriteComponent->Play("idle");
+
+	AddMovementComponent();
+}
+
+void SuperBullet::MainCharacter::SetPosition(const Vector2f & position)
+{
+	Object::SetPosition(position);
+	mSpriteComponent->SetPosition(position);
 }
 
 void SuperBullet::MainCharacter::LoadRifleSpriteSheets()
@@ -36,4 +50,12 @@ void SuperBullet::MainCharacter::LoadRifleSpriteSheets()
 	mSpriteComponent->AddAnimation("shoot", *shoot_ss, SuperBullet::Vector2u(0, 0), 3, 1, 3);
 
 	AttachComponent(mSpriteComponent);
+}
+
+void SuperBullet::MainCharacter::AddMovementComponent()
+{
+	std::shared_ptr<InputMovementComponent> inputMovementComponent =
+		std::make_shared<InputMovementComponent>(0.1f);
+
+	AttachComponent(inputMovementComponent);
 }

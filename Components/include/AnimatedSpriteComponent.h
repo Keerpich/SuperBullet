@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "../../ModuleRendering/include/AnimatedSprite.h"
 #include "../../ModuleRendering/include/Texture.h"
+#include "../../Utilities/include/Vector.h"
 
 namespace SuperBullet
 {
@@ -28,6 +29,9 @@ namespace SuperBullet
 		);
 
 		void Play(const std::string &animationName);
+
+		void SetPosition(const Vector2f &position) override;
+
 	private:
 		std::unique_ptr<AnimatedSprite> mAnimatedSprite;
 		std::map<std::string, Animation> mAnimations;

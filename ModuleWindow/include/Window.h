@@ -10,10 +10,7 @@
 
 namespace SuperBullet
 {
-	enum class Event
-	{
-		Closed
-	};
+	using Event = sf::Event;
 
 	class Window
 	{
@@ -37,13 +34,13 @@ namespace SuperBullet
 
 		using EventCallback = std::function<void()>;
 
-		void RegisterEventCallback(Event e, EventCallback callback);
-		void UnregisterEventCallback(Event e, EventCallback callback);
+		void RegisterEventCallback(Event::EventType e, EventCallback callback);
+		void UnregisterEventCallback(Event::EventType e, EventCallback callback);
 
 	private:
 		sf::RenderWindow mWindow;
 
 		using EventCallbackList = std::list<std::function<void()>>;
-		std::map<Event, EventCallbackList> mCallbacks;
+		std::map<Event::EventType, EventCallbackList> mCallbacks;
 	};
 }

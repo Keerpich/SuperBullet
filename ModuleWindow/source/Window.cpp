@@ -41,7 +41,7 @@ void SuperBullet::Window::PollEvents()
 
 	while(mWindow.pollEvent(event))
 	{
-		auto it = mCallbacks.find(static_cast<Event>(event.type));
+		auto it = mCallbacks.find(event.type);
 		if (it != mCallbacks.end())
 		{
 			for (auto &callback : it->second)
@@ -52,7 +52,7 @@ void SuperBullet::Window::PollEvents()
 	}
 }
 
-void SuperBullet::Window::RegisterEventCallback(Event e, EventCallback callback)
+void SuperBullet::Window::RegisterEventCallback(Event::EventType e, EventCallback callback)
 {
 	auto eventPosition = mCallbacks.find(e);
 	if (eventPosition != mCallbacks.end())
@@ -65,7 +65,7 @@ void SuperBullet::Window::RegisterEventCallback(Event e, EventCallback callback)
 	}
 }
 
-void SuperBullet::Window::UnregisterEventCallback(Event e, EventCallback callback)
+void SuperBullet::Window::UnregisterEventCallback(Event::EventType e, EventCallback callback)
 {
 	auto eventPosition = mCallbacks.find(e);
 	if (eventPosition != mCallbacks.end())

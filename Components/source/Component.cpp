@@ -58,12 +58,18 @@ namespace SuperBullet
 
 	void Component::SetPosition(const Vector2f & position)
 	{
+		mWorldPositionCacheDirty = true;
 		mPosition = position;
 	}
 
 	void Component::SetWorldPosition(const Vector2f & position)
 	{
 		mPosition = position - GetWorldPosition();
+	}
+
+	Component::OwnerVariant Component::GetOwner()
+	{
+		return mOwner;
 	}
 
 	Vector2f Component::GetPosition() const

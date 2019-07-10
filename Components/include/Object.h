@@ -5,13 +5,10 @@
 
 #include "../../ModuleRendering/include/RenderStates.h"
 #include "../../ModuleRendering/include/RenderTarget.h"
+#include "../../Utilities/include/Vector.h"
 
 namespace SuperBullet
 {
-	using Vector2f = sf::Vector2<float>;
-	using Vector2i = sf::Vector2<int>;
-	using Vector2u = sf::Vector2u;
-	constexpr float FPS = 60.f;
 	class Component;
 
 	class Object : public std::enable_shared_from_this<Object>
@@ -25,6 +22,9 @@ namespace SuperBullet
 
 		virtual ~Object() = default;
 
+		//Don't attach components in constructor. We can't get a weak_ptr or shared_ptr to the object
+		//before the object is constructed so it will set the component's owner to 'empty' which, most likely,
+		//will result in a crash
 		void AttachComponent(ComponentPtr component);
 		void AttachComponents(std::list<ComponentPtr> components);
 
@@ -33,8 +33,8 @@ namespace SuperBullet
 		void Update(float deltaSeconds);
 		void Draw(RenderTarget& target, RenderStates states = RenderStates::Default) const;
 
-		void SetPosition(const Vector2f& position);
-		Vector2f GetPosition() const;
+		virtual void SetPosition(const Vector2f& position);
+		Vector2<float> GetPosition() const;
 
 	private:
 		std::list<ComponentPtr> mComponents;

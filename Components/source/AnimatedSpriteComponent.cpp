@@ -8,7 +8,6 @@ SuperBullet::AnimatedSpriteComponent::AnimatedSpriteComponent(
 	mAnimatedSprite(std::make_unique<AnimatedSprite>(sf::seconds(frameTimeInSeconds), paused, looped)),
 	Component(position)
 {
-	mAnimatedSprite->setPosition(position);
 }
 
 SuperBullet::AnimatedSpriteComponent::~AnimatedSpriteComponent()
@@ -70,6 +69,16 @@ void SuperBullet::AnimatedSpriteComponent::AddAnimation(
 void SuperBullet::AnimatedSpriteComponent::Play(const std::string & animationName)
 {
 	mAnimatedSprite->play(mAnimations[animationName]);
+}
+
+void SuperBullet::AnimatedSpriteComponent::Stop()
+{
+	mAnimatedSprite->stop();
+}
+
+void SuperBullet::AnimatedSpriteComponent::Pause()
+{
+	mAnimatedSprite->pause();
 }
 
 void SuperBullet::AnimatedSpriteComponent::SetPosition(const Vector2f & position)

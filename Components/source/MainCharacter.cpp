@@ -3,7 +3,11 @@
 
 SuperBullet::MainCharacter::MainCharacter(const Vector2f & position) :
 	Object(position),
-	mSpriteComponent(std::make_shared<AnimatedSpriteComponent>(5.f, false, true, position))
+	mSpriteComponent(std::make_shared<AnimatedSpriteComponent>(1.f / 60.f * 3.f, 
+		false, 
+		true, 
+		position
+	))
 {
 }
 
@@ -55,7 +59,26 @@ void SuperBullet::MainCharacter::LoadRifleSpriteSheets()
 void SuperBullet::MainCharacter::AddMovementComponent()
 {
 	std::shared_ptr<InputMovementComponent> inputMovementComponent =
-		std::make_shared<InputMovementComponent>(0.1f);
+		std::make_shared<InputMovementComponent>(
+			1.f,
+			Vector2f(0, 0),
+			20.f,
+			std::bind(&MainCharacter::MovementCallback, this, std::placeholders::_1)
+		);
 
 	AttachComponent(inputMovementComponent);
+}
+
+void SuperBullet::MainCharacter::MovementCallback(bool moved)
+{
+	if (moved && !mIsMoving)
+	{
+		mSpriteComponent->Play("move");
+	}
+	else if (!moved && mIsMoving)
+	{
+		mSpriteComponent->Play("idle");
+	}
+
+	mIsMoving = moved;
 }

@@ -8,6 +8,7 @@
 
 #include <chrono>
 #include <type_traits>
+#include <iostream>
 
 
 std::chrono::system_clock::rep time_since_epoch() {
@@ -40,12 +41,14 @@ int main()
 	while (window.IsOpen())
 	{
 		auto currentTime = std::chrono::system_clock::now();
-		std::chrono::duration<float, std::milli> timeSpan = currentTime - lastTime;
+		std::chrono::duration<float> timeSpan = currentTime - lastTime;
 		lastTime = currentTime;
 		deltaTime += timeSpan.count();
 
 		while (deltaTime >= kFrameTime)
 		{
+			std::cout << "FPS: " << 1.f / deltaTime << std::endl;
+
 			character->Update(kFrameTime);
 			window.PollEvents();
 			window.Clear();

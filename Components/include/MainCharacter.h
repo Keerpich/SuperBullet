@@ -16,8 +16,11 @@ namespace SuperBullet
 	private:
 		void LoadRifleSpriteSheets();
 		void AddMovementComponent();
+		void MovementCallback(bool moved);
 
 		std::list<std::shared_ptr<Texture>> spritesheets;
 		std::shared_ptr<AnimatedSpriteComponent> mSpriteComponent;
+
+		bool mIsMoving = false;
 	};
 }

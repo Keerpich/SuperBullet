@@ -29,6 +29,8 @@ namespace SuperBullet
 		);
 
 		void Play(const std::string &animationName);
+		void Stop();
+		void Pause();
 
 		void SetPosition(const Vector2f &position) override;
 

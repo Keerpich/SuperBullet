@@ -45,6 +45,18 @@ add_custom_command(TARGET main POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_directory
 					${CONAN_SFML_ROOT_RELEASE}/bin/ $<TARGET_FILE_DIR:main>)
 
+					
+# Copies Assets to exe file location
+add_custom_command(TARGET main POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+					${CMAKE_CURRENT_SOURCE_DIR}/../Assets $<TARGET_FILE_DIR:main>/Assets)
+
+# Copies Assets to project location
+add_custom_command(TARGET main POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+					${CMAKE_CURRENT_SOURCE_DIR}/../Assets ${PROJECT_BINARY_DIR}/main/Assets)
+
+
 # Adds logic to INSTALL.vcproj to copy app.exe to destination directory
 install (TARGETS main
          RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/_install)

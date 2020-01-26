@@ -9,6 +9,7 @@
 #include <chrono>
 #include <type_traits>
 #include <iostream>
+#include <fstream>
 
 
 std::chrono::system_clock::rep time_since_epoch() {
@@ -47,7 +48,7 @@ int main()
 
 		while (deltaTime >= kFrameTime)
 		{
-			std::cout << "FPS: " << 1.f / deltaTime << std::endl;
+			//std::cout << "FPS: " << 1.f / deltaTime << std::endl;
 
 			character->Update(kFrameTime);
 			window.PollEvents();

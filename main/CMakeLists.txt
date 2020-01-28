@@ -11,7 +11,13 @@ add_executable (main ${main_files})
 
 add_dependencies(main ModuleWindow)
 add_dependencies(main ModuleRendering)
+add_dependencies(main ModuleInput)
 add_dependencies(main Components)
+
+target_link_libraries(main ModuleWindow)
+target_link_libraries(main ModuleRendering)
+target_link_libraries(main ModuleInput)
+target_link_libraries(main Components)
 
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})

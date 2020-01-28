@@ -5,11 +5,13 @@
 #include "../../Components/include/Component.h"
 #include "../../Components/include/Object.h"
 #include "../../Components/include/MainCharacter.h"
+#include "../../ModuleInput/include/InputHandler.h"
 
 #include <chrono>
 #include <type_traits>
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 
 std::chrono::system_clock::rep time_since_epoch() {
@@ -31,8 +33,15 @@ int main()
 		}
 	);
 
+	std::shared_ptr<SuperBullet::InputHandler> inputHandler = 
+		std::make_shared<SuperBullet::InputHandler>();
+
 	std::shared_ptr<SuperBullet::MainCharacter> character = 
-		std::make_shared<SuperBullet::MainCharacter>(SuperBullet::Vector2f(200.f, 200.f));
+		std::make_shared<SuperBullet::MainCharacter>(
+			SuperBullet::Vector2f(200.f, 200.f),
+			inputHandler
+		);
+
 	character->Initialize();
 
 	auto lastTime = std::chrono::system_clock::now();
@@ -49,6 +58,8 @@ int main()
 		while (deltaTime >= kFrameTime)
 		{
 			//std::cout << "FPS: " << 1.f / deltaTime << std::endl;
+			inputHandler->Update();
+
 
 			character->Update(kFrameTime);
 			window.PollEvents();

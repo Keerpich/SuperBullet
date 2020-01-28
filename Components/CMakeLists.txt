@@ -7,6 +7,11 @@ file(GLOB module_files
 add_library (Components STATIC ${module_files})
 
 add_dependencies(Components ModuleRendering)
+add_dependencies(Components ModuleInput)
+
+target_link_libraries(Components Utilities)
+target_link_libraries(Components ModuleInput)
+target_link_libraries(Components ModuleRendering)
 
 # Properties->Linker->Input->Additional Dependencies
 foreach(_LIB ${CONAN_LIBS_RELEASE})

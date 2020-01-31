@@ -110,7 +110,10 @@ namespace SuperBullet
 
 	void MainCharacter::InitializeShootingComponent()
 	{
+		mCurrentGun = std::make_shared<PlasticGun>();
+
 		mShootingComponent = std::make_shared<ShootingComponent>(
+			mCurrentGun,
 			std::bind(&MainCharacter::ShootingCallback,
 				this));
 

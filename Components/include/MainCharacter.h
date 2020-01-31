@@ -12,6 +12,7 @@ namespace SuperBullet
 	class InputComponent;
 	class ShootingComponent;
 	class MovementComponent;
+	class Weapon;
 
 	class MainCharacter : public Object
 	{
@@ -41,6 +42,7 @@ namespace SuperBullet
 		std::shared_ptr<AnimatedSpriteComponent> mSpriteComponent;
 		std::shared_ptr<ShootingComponent> mShootingComponent;
 		std::shared_ptr<MovementComponent> mMovementComponent;
+		std::shared_ptr<Weapon> mCurrentGun;
 
 		bool mIsMoving = false;
 	};

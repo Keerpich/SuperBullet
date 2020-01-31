@@ -1,7 +1,8 @@
 #include "../include/ShootingComponent.h"
+#include "../../Weapons/include/Weapon.h"
+#include "../../Weapons/include/Projectile.h"
 
 #include <cmath>
-#include <iostream>
 
 namespace SuperBullet
 {
@@ -33,45 +34,5 @@ namespace SuperBullet
 		{
 			mpWeapon->ElapseCooldown(deltaSeconds);
 		}
-	}
-
-	inline Weapon::~Weapon()
-	{
-
-	}
-
-	void Weapon::ElapseCooldown(float cooldown)
-	{
-		mCurrentCooldown -= cooldown;
-		mCurrentCooldown = fmax(0.f, mCurrentCooldown);
-	}
-
-	void Weapon::SetCooldown(float cooldown)
-	{
-		mCurrentCooldown = cooldown;
-	}
-
-	bool Weapon::IsOnCooldown()
-	{
-		return mCurrentCooldown > FLT_EPSILON;
-	}
-
-	PlasticGun::PlasticGun() :
-		Weapon()
-	{
-	}
-
-	std::shared_ptr<Projectile> PlasticGun::Shoot()
-	{
-		if (!IsOnCooldown())
-		{
-			std::cout << "Pew Pew, Plastic Gun\n";
-
-			SetCooldown(kCooldownInSeconds);
-
-			return std::make_shared<Projectile>();
-		}
-
-		return nullptr;
 	}
 }

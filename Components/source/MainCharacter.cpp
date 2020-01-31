@@ -4,8 +4,7 @@
 #include "..\include\AnimatedSpriteComponent.h"
 #include "..\include\ShootingComponent.h"
 #include "..\..\Utilities\include\Constants.h"
-
-#include <iostream>
+#include "..\..\Weapons\include\PlasticGun.h"
 
 namespace SuperBullet
 {
@@ -128,7 +127,6 @@ namespace SuperBullet
 
 	void MainCharacter::ShootingCallback()
 	{
-		std::cout << "It's on fire!" << std::endl;
 	}
 
 	void MainCharacter::InitializeInputComponent()

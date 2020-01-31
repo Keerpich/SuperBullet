@@ -33,6 +33,17 @@ namespace SuperBullet
 				mJoystickCallbacks[InputKey::JoystickLeftStick](x, y);
 			}
 		}
+
+		if (IsInUse(InputKey::RightTrigger))
+		{
+			if (const auto result = mJoystickCallbacks.find(InputKey::RightTrigger);
+				result != mJoystickCallbacks.end())
+			{
+				float value = Joystick::getAxisPosition(0, Joystick::Axis::Z) * -1.;
+
+				mJoystickCallbacks[InputKey::RightTrigger](value, 0.f);
+			}
+		}
     }
 
 	bool InputHandler::IsInUse(InputKey key)
@@ -53,6 +64,11 @@ namespace SuperBullet
 				return false;
 		}
 		break;
+		case SuperBullet::InputKey::RightTrigger:
+		{
+			float value = Joystick::getAxisPosition(0, Joystick::Axis::Z);
+			return value < -10.f;
+		}
 		default:
 		{
 			return false;

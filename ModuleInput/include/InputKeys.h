@@ -8,6 +8,7 @@ namespace SuperBullet
 
 	enum class InputKey : unsigned int
 	{
-		JoystickLeftStick
+		JoystickLeftStick,
+		RightTrigger
 	};
 }

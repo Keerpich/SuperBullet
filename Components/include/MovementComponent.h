@@ -8,29 +8,25 @@
 
 namespace SuperBullet
 {
-	class PlayerMovementComponent : public Component
+	class MovementComponent : public Component
 	{
 	public:
-		PlayerMovementComponent(
-			std::shared_ptr<InputHandler> &inputHandler,
+		MovementComponent(
 			float speedPerFrame,
 			const Vector2f& position
 			);
 
-		PlayerMovementComponent(
-			std::shared_ptr<InputHandler> &inputHandler,
+		MovementComponent(
 			float speedPerFrame,
 			const Vector2f& position,
 			std::function<void(bool)> callback);
 
-		~PlayerMovementComponent();
-
+		void SetMovementDirection(float x, float y);
 		void Update(float deltaSeconds) override;
 
 	private:
 		void SetOwnerPosition(const Vector2f& position);
 
-		std::shared_ptr<InputHandler> mInputHandler;
 		float mSpeedPerFrame;
 		std::function<void(bool)> mCallback;
 

@@ -1,4 +1,4 @@
-#include "..\include\PlayerMovementComponent.h"
+#include "..\include\MovementComponent.h"
 #include "..\..\Utilities\include\Vector.h"
 #include "..\..\ModuleInput\include\InputHandler.h"
 
@@ -6,41 +6,32 @@
 
 namespace SuperBullet
 {
-	PlayerMovementComponent::PlayerMovementComponent(
-		std::shared_ptr<InputHandler> &inputHandler,
+	MovementComponent::MovementComponent(
 		float speedPerFrame,
 		const Vector2f & position) :
-		PlayerMovementComponent(inputHandler, speedPerFrame, position, nullptr)
+		MovementComponent(speedPerFrame, position, nullptr)
 	{
 	}
 
-	PlayerMovementComponent::PlayerMovementComponent(
-		std::shared_ptr<InputHandler> &inputHandler,
+	MovementComponent::MovementComponent(
 		float speedPerFrame,
 		const Vector2f &position,
 		std::function<void(bool)> callback) :
 		Component(),
-		mInputHandler(inputHandler),
 		mSpeedPerFrame(speedPerFrame),
 		mCallback(callback),
 		mInputVector(0, 0)
 	{
 		SetPosition(position);
-
-		mInputHandler->RegisterCallback(InputKey::JoystickLeftStick,
-			[this](float x, float y) -> void
-		{
-			this->mInputVector.x = x;
-			this->mInputVector.y = y;
-		});
 	}
 
-	PlayerMovementComponent::~PlayerMovementComponent()
+	void MovementComponent::SetMovementDirection(float x, float y)
 	{
-		mInputHandler->UnregisterCallback(InputKey::JoystickLeftStick);
+		this->mInputVector.x = x;
+		this->mInputVector.y = y;
 	}
 
-	void PlayerMovementComponent::Update(float deltaSeconds)
+	void MovementComponent::Update(float deltaSeconds)
 	{
 		const Vector2f direction = mInputVector.Normalize();
 		const Vector2f currentPosition = GetOwnerPosition();
@@ -55,7 +46,7 @@ namespace SuperBullet
 		mInputVector.y = 0.f;
 	}
 
-	void PlayerMovementComponent::SetOwnerPosition(const Vector2f& position)
+	void MovementComponent::SetOwnerPosition(const Vector2f& position)
 	{
 		Component::OwnerVariant owner = GetOwner();
 

@@ -1,5 +1,10 @@
 #include "..\include\MainCharacter.h"
-#include "..\include\PlayerMovementComponent.h"
+#include "..\include\InputComponent.h"
+#include "..\include\MovementComponent.h"
+#include "..\include\AnimatedSpriteComponent.h"
+#include "..\include\ShootingComponent.h"
+
+#include <iostream>
 
 namespace SuperBullet
 {
@@ -8,11 +13,13 @@ namespace SuperBullet
 		std::shared_ptr<InputHandler> &inputHandler) :
 		Object(position),
 		mInputHandler(inputHandler),
+		mInputComponent(std::make_shared<InputComponent>(inputHandler)),
 		mSpriteComponent(std::make_shared<AnimatedSpriteComponent>(1.f / 60.f * 3.f,
 			false,
 			true,
 			position
-			))
+			)),
+		mShootingComponent(std::make_shared<ShootingComponent>([]() {std::cout << "Shit works yo\n"; }))
 	{
 	}
 
@@ -21,8 +28,9 @@ namespace SuperBullet
 		LoadRifleSpriteSheets();
 
 		mSpriteComponent->Play("idle");
-
 		AddMovementComponent();
+		AttachComponent(mShootingComponent);
+		mInputComponent->RegisterComponent(InputKey::RightTrigger, mShootingComponent);
 	}
 
 	void MainCharacter::SetPosition(const Vector2f & position)
@@ -63,13 +71,18 @@ namespace SuperBullet
 
 	void MainCharacter::AddMovementComponent()
 	{
-		std::shared_ptr<PlayerMovementComponent> inputMovementComponent =
-			std::make_shared<PlayerMovementComponent>(
-				mInputHandler,
+		std::shared_ptr<MovementComponent> inputMovementComponent =
+			std::make_shared<MovementComponent>(
 				50.f,
 				Vector2f(0, 0),
 				std::bind(&MainCharacter::MovementCallback, this, std::placeholders::_1)
 				);
+
+		mInputHandler->RegisterCallback(InputKey::JoystickLeftStick,
+			std::bind(&MovementComponent::SetMovementDirection,
+				inputMovementComponent,
+				std::placeholders::_1,
+				std::placeholders::_2));
 
 		AttachComponent(inputMovementComponent);
 	}

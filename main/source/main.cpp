@@ -6,6 +6,7 @@
 #include "../../Components/include/Object.h"
 #include "../../Components/include/MainCharacter.h"
 #include "../../ModuleInput/include/InputHandler.h"
+#include "../../Utilities/include/Constants.h"
 
 #include <chrono>
 #include <type_traits>
@@ -45,7 +46,7 @@ int main()
 	character->Initialize();
 
 	auto lastTime = std::chrono::system_clock::now();
-	constexpr float kFrameTime = 1.f / 60.f;
+	constexpr float kFrameTime = 1.f / FPS;
 	float deltaTime = 0.f;
 
 	while (window.IsOpen())
@@ -57,7 +58,6 @@ int main()
 
 		while (deltaTime >= kFrameTime)
 		{
-			//std::cout << "FPS: " << 1.f / deltaTime << std::endl;
 			inputHandler->Update();
 
 

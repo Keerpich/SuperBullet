@@ -10,21 +10,29 @@ namespace SuperBullet
 {
 	class AnimatedSpriteComponent;
 	class InputComponent;
-	class ShootingComponent;;
+	class ShootingComponent;
+	class MovementComponent;
 
 	class MainCharacter : public Object
 	{
 	public:
 		MainCharacter(const Vector2f & position, 
 			std::shared_ptr<InputHandler> &inputHandler);
+
+		//Need to initialize through this becase we use 'weak_from_this()'
+		//which returns nullptr if used in constructor causing everything to crash
 		void Initialize();
 
 		virtual void SetPosition(const Vector2f& position) override;
 
 	private:
-		void LoadRifleSpriteSheets();
-		void AddMovementComponent();
+		void InitializeSpriteComponent();
+		void InitializeMovementComponent();
+		void InitializeShootingComponent();
+		void InitializeInputComponent();
+
 		void MovementCallback(bool moved);
+		void ShootingCallback();
 
 		std::shared_ptr<InputHandler> mInputHandler;
 
@@ -32,6 +40,7 @@ namespace SuperBullet
 		std::shared_ptr<InputComponent> mInputComponent;
 		std::shared_ptr<AnimatedSpriteComponent> mSpriteComponent;
 		std::shared_ptr<ShootingComponent> mShootingComponent;
+		std::shared_ptr<MovementComponent> mMovementComponent;
 
 		bool mIsMoving = false;
 	};

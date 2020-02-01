@@ -24,8 +24,14 @@ namespace SuperBullet
 	public:
 		Component();
 		Component(const Vector2f &position);
+		Component(const Vector2f &position, float rotation);
+		Component(const Component& other) = default;
+		Component(Component&& other) = default;
 
 		virtual ~Component() = 0;
+
+		Component& operator=(const Component& other) = default;
+		Component& operator=(Component&& other) = default;
 
 		virtual void Update(float deltaSeconds);
 		virtual void Draw(RenderTarget& target, RenderStates states) const;
@@ -39,16 +45,28 @@ namespace SuperBullet
 		virtual void SetPosition(const Vector2f& position);
 		virtual void SetWorldPosition(const Vector2f& position);
 
-		OwnerVariant GetOwner();
+		OwnerVariant GetOwner() const;
+
 		Vector2f GetPosition() const;
-		Vector2f GetWorldPosition();
+		Vector2f GetWorldPosition() const;
 		Vector2f GetOwnerPosition() const;
+
+		virtual void SetRotation(const float degrees);
+		virtual void SetWorldRotation(const float degrees);
+
+		float GetRotation() const;
+		float GetWorldRotation() const;
+		float GetOwnerRotation() const;
 
 	private:
 		Vector2f mPosition;
+		float mRotation;
 
-		Vector2f mCachedWorldPosition;
-		bool mWorldPositionCacheDirty = true;
+		mutable Vector2f mCachedWorldPosition;
+		mutable bool mWorldPositionCacheDirty = true;
+
+		mutable float mCachedWorldRotation;
+		mutable bool mWorldRotationCacheDirty = true;
 
 		OwnerVariant mOwner;
 

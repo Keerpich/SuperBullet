@@ -19,8 +19,14 @@ namespace SuperBullet
 	public:
 		Object();
 		Object(const Vector2f &position);
+		Object(const Vector2f &position, float rotation);
+		Object(const Object& other) = default;
+		Object(Object&& other) = default;
 
 		virtual ~Object() = default;
+
+		Object& operator=(const Object& other) = default;
+		Object& operator=(Object&& other) = default;
 
 		//Don't attach components in constructor. We can't get a weak_ptr or shared_ptr to the object
 		//before the object is constructed so it will set the component's owner to 'empty' which, most likely,
@@ -36,8 +42,12 @@ namespace SuperBullet
 		virtual void SetPosition(const Vector2f& position);
 		Vector2<float> GetPosition() const;
 
+		virtual void SetRotation(const float rotation);
+		float GetRotation() const;
+
 	private:
 		std::list<ComponentPtr> mComponents;
 		Vector2f mPosition;
+		float mRotation;
 	};
 }

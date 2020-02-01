@@ -17,64 +17,17 @@ namespace SuperBullet
         /// WARNING: Make sure to unregister when you destroy the callback owner
 		void RegisterCallback(InputKey key,
 			std::function<void(float, float)> callback);
-		/*{
-			UnregisterCallback(key);
-
-			mJoystickCallbacks.insert(std::make_pair(key, callback));
-		}*/
 
 		void UnregisterCallback(InputKey key);
-		/*{
-			if (const auto result = mJoystickCallbacks.find(key);
-				result != mJoystickCallbacks.end())
-			{
-				mJoystickCallbacks.erase(result);
-			}
-		}*/
 
 		void Update();
-		/*{
-			if (IsInUse(InputKey::JoystickLeftStick))
-			{
-				if (const auto result = mJoystickCallbacks.find(InputKey::JoystickLeftStick);
-					result != mJoystickCallbacks.end())
-				{
-					float x = Joystick::getAxisPosition(0, Joystick::Axis::X);
-					float y = Joystick::getAxisPosition(0, Joystick::Axis::Y);
-
-					mJoystickCallbacks[InputKey::JoystickLeftStick](x, y);
-				}
-			}
-		}*/
 
     private:
 		bool IsInUse(InputKey key);
-		/*{
-			switch (key)
-			{
-			case SuperBullet::InputKey::JoystickLeftStick:
-			{
-				float x = Joystick::getAxisPosition(0, Joystick::Axis::X);
-				float y = Joystick::getAxisPosition(0, Joystick::Axis::Y);
 
-				const Vector2f stickVector(x, y);
-				const float stickMagnitude = stickVector.Magnitude();
-
-				if (stickMagnitude > 20.f)
-					return true;
-				else
-					return false;
-			}
-			break;
-			default:
-			{
-				return false;
-			}
-			break;
-			}
-		}*/
-
-		//static constexpr float skJoystickLeftStickDeadzone = 20.f;
+		static constexpr float skJoystickLeftStickDeadzone = 20.f;
+		static constexpr float skJoystickRightStickDeadzone = 20.f;
+		static constexpr float skJoystickRightTriggerDeadzone = 10.f;
 
         std::map<InputKey, std::function<void(float, float)>> mJoystickCallbacks;
     };

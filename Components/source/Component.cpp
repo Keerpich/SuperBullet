@@ -4,12 +4,18 @@
 namespace SuperBullet
 {
 	Component::Component() :
-		mPosition(0.f, 0.f)
+		Component({ 0.f, 0.f })
 	{
 	}
 
 	Component::Component(const Vector2f & position) :
-		mPosition(position)
+		Component(position, 0.f)
+	{
+	}
+
+	Component::Component(const Vector2f & position, float rotation) :
+		mPosition(position),
+		mRotation(rotation)
 	{
 	}
 
@@ -64,10 +70,11 @@ namespace SuperBullet
 
 	void Component::SetWorldPosition(const Vector2f & position)
 	{
-		mPosition = position - GetWorldPosition();
+		mPosition = position - GetOwnerPosition();
+		mCachedWorldPosition = position;
 	}
 
-	Component::OwnerVariant Component::GetOwner()
+	Component::OwnerVariant Component::GetOwner() const
 	{
 		return mOwner;
 	}
@@ -77,10 +84,12 @@ namespace SuperBullet
 		return mPosition;
 	}
 
-	Vector2f Component::GetWorldPosition()
+	Vector2f Component::GetWorldPosition() const
 	{
-		if (!mWorldPositionCacheDirty)
-			return mCachedWorldPosition;
+		//Disabled this because we don't invaldiate position cache when parent's position
+		//is changed. We also might not need caching
+		/*if (!mWorldPositionCacheDirty)
+			return mCachedWorldPosition;*/
 
 		if (std::holds_alternative<std::weak_ptr<Component>>(mOwner))
 		{
@@ -108,6 +117,59 @@ namespace SuperBullet
 		{
 			std::shared_ptr<Object> owner = std::get <std::weak_ptr<Object>>(mOwner).lock();
 			return owner->GetPosition();
+		}
+	}
+
+	void Component::SetRotation(const float degrees)
+	{
+		mWorldRotationCacheDirty = true;
+		mRotation = degrees;
+	}
+
+	void Component::SetWorldRotation(const float degrees)
+	{
+		mRotation = degrees - GetOwnerRotation();
+		mCachedWorldRotation = degrees;
+	}
+
+	float Component::GetRotation() const
+	{
+		return mRotation;
+	}
+
+	float Component::GetWorldRotation() const
+	{
+		//Disabled this because we don't invaldiate rotation cache when parent's position
+		//is changed. We also might not need caching
+		/*if (!mWorldRotationCacheDirty)
+			return mCachedWorldRotation;*/
+
+		if (std::holds_alternative<std::weak_ptr<Component>>(mOwner))
+		{
+			std::shared_ptr<Component> owner = std::get<std::weak_ptr<Component>>(mOwner).lock();
+			mCachedWorldRotation = owner->GetWorldRotation() + GetRotation();
+		}
+		else
+		{
+			std::shared_ptr<Object> owner = std::get<std::weak_ptr<Object>>(mOwner).lock();
+			mCachedWorldRotation = owner->GetRotation() + GetRotation();
+		}
+
+		mWorldRotationCacheDirty = false;
+		return mCachedWorldRotation;
+	}
+
+	float Component::GetOwnerRotation() const
+	{
+		if (std::holds_alternative<std::weak_ptr<Component>>(mOwner))
+		{
+			std::shared_ptr<Component> owner = std::get<std::weak_ptr<Component>>(mOwner).lock();
+			return owner->GetRotation();
+		}
+		else
+		{
+			std::shared_ptr<Object> owner = std::get <std::weak_ptr<Object>>(mOwner).lock();
+			return owner->GetRotation();
 		}
 	}
 }

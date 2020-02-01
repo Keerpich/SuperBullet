@@ -2,12 +2,18 @@
 #include "..\include\Component.h"
 
 SuperBullet::Object::Object() :
-	mPosition(0.f, 0.f)
+	Object({ 0.f, 0.f }, 0.f)
 {
 }
 
 SuperBullet::Object::Object(const Vector2f& position) :
-	mPosition(position)
+	Object(position, 0.f)
+{
+}
+
+SuperBullet::Object::Object(const Vector2f & position, float rotation) :
+	mPosition(position),
+	mRotation(rotation)
 {
 }
 
@@ -57,5 +63,15 @@ void SuperBullet::Object::SetPosition(const Vector2f & position)
 SuperBullet::Vector2f SuperBullet::Object::GetPosition() const
 {
 	return mPosition;
+}
+
+void SuperBullet::Object::SetRotation(const float rotation)
+{
+	mRotation = rotation;
+}
+
+float SuperBullet::Object::GetRotation() const
+{
+	return mRotation;
 }
 

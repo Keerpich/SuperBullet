@@ -31,18 +31,26 @@ namespace SuperBullet
 		Object::SetPosition(position);
 		
 		if (mSpriteComponent)
-			mSpriteComponent->SetPosition(position);
+			mSpriteComponent->SetWorldPosition(position);
+	}
+
+	void MainCharacter::SetRotation(const float degrees)
+	{
+		Object::SetRotation(degrees);
+
+		if (mSpriteComponent)
+			mSpriteComponent->SetWorldRotation(degrees);
 	}
 
 	void MainCharacter::InitializeSpriteComponent()
 	{
-		mSpriteComponent = { 
+		mSpriteComponent = {
 			std::make_shared<AnimatedSpriteComponent>(
 				1.f / FPS * 3.f,
 				false,
 				true,
 				GetPosition()
-				) 
+				)
 		};
 
 		std::shared_ptr<Texture> idle_ss = std::make_shared<Texture>();
@@ -70,9 +78,12 @@ namespace SuperBullet
 		spritesheets.push_back(shoot_ss);
 		mSpriteComponent->AddAnimation("shoot", *shoot_ss, Vector2u(0, 0), 3, 1, 3);
 
+		mSpriteComponent->Play("idle");
+
+		mSpriteComponent->SetAnchorPoint({0.3f, 0.5f});
+
 		AttachComponent(mSpriteComponent);
 
-		mSpriteComponent->Play("idle");
 	}
 
 	void MainCharacter::InitializeMovementComponent()
@@ -81,11 +92,18 @@ namespace SuperBullet
 			std::make_shared<MovementComponent>(
 				50.f,
 				Vector2f(0, 0),
-				std::bind(&MainCharacter::MovementCallback, this, std::placeholders::_1)
+				std::bind(&MainCharacter::MovementCallback, this, std::placeholders::_1),
+				nullptr
 				);
 
 		mInputHandler->RegisterCallback(InputKey::JoystickLeftStick,
 			std::bind(&MovementComponent::SetMovementDirection,
+				mMovementComponent,
+				std::placeholders::_1,
+				std::placeholders::_2));
+
+		mInputHandler->RegisterCallback(InputKey::JoystickRightStick,
+			std::bind(&MovementComponent::SetFacingDirection,
 				mMovementComponent,
 				std::placeholders::_1,
 				std::placeholders::_2));
@@ -111,10 +129,7 @@ namespace SuperBullet
 	{
 		mCurrentGun = std::make_shared<PlasticGun>();
 
-		mShootingComponent = std::make_shared<ShootingComponent>(
-			mCurrentGun,
-			std::bind(&MainCharacter::ShootingCallback,
-				this));
+		mShootingComponent = std::make_shared<ShootingComponent>(mCurrentGun, nullptr);
 
 		mInputHandler->RegisterCallback(InputKey::RightTrigger,
 			std::bind(&ShootingComponent::Shoot,
@@ -123,10 +138,6 @@ namespace SuperBullet
 				std::placeholders::_2));
 
 		AttachComponent(mShootingComponent);
-	}
-
-	void MainCharacter::ShootingCallback()
-	{
 	}
 
 	void MainCharacter::InitializeInputComponent()

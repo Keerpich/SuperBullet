@@ -75,6 +75,9 @@ namespace SuperBullet
 
 		Vector2<float>& operator=(const Vector2<float>& other);
 		operator sf::Vector2f();
+
+		static const Vector2<float> Right;
+		static const Vector2<float> Zero;
 	};
 
 	inline Vector2<float>::Vector2() :

@@ -26,7 +26,9 @@ namespace SuperBullet
 	{
 		if (mDidShoot)
 		{
-			mCallback();
+			if (mCallback)
+				mCallback();
+
 			mDidShoot = false;
 		}
 

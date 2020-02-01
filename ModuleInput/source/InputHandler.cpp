@@ -34,6 +34,18 @@ namespace SuperBullet
 			}
 		}
 
+		if (IsInUse(InputKey::JoystickRightStick))
+		{
+			if (const auto result = mJoystickCallbacks.find(InputKey::JoystickRightStick);
+				result != mJoystickCallbacks.end())
+			{
+				float x = Joystick::getAxisPosition(0, Joystick::Axis::U);
+				float y = Joystick::getAxisPosition(0, Joystick::Axis::V);
+
+				mJoystickCallbacks[InputKey::JoystickRightStick](x, y);
+			}
+		}
+
 		if (IsInUse(InputKey::RightTrigger))
 		{
 			if (const auto result = mJoystickCallbacks.find(InputKey::RightTrigger);
@@ -58,7 +70,21 @@ namespace SuperBullet
 			const Vector2f stickVector(x, y);
 			const float stickMagnitude = stickVector.Magnitude();
 
-			if (stickMagnitude > 20.f)
+			if (stickMagnitude > skJoystickLeftStickDeadzone)
+				return true;
+			else
+				return false;
+		}
+		break;
+		case SuperBullet::InputKey::JoystickRightStick:
+		{
+			float x = Joystick::getAxisPosition(0, Joystick::Axis::U);
+			float y = Joystick::getAxisPosition(0, Joystick::Axis::V);
+
+			const Vector2f stickVector(x, y);
+			const float stickMagnitude = stickVector.Magnitude();
+
+			if (stickMagnitude > skJoystickRightStickDeadzone)
 				return true;
 			else
 				return false;
@@ -67,8 +93,9 @@ namespace SuperBullet
 		case SuperBullet::InputKey::RightTrigger:
 		{
 			float value = Joystick::getAxisPosition(0, Joystick::Axis::Z);
-			return value < -10.f;
+			return value < -skJoystickRightTriggerDeadzone;
 		}
+		break;
 		default:
 		{
 			return false;

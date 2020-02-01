@@ -81,8 +81,37 @@ void SuperBullet::AnimatedSpriteComponent::Pause()
 	mAnimatedSprite->pause();
 }
 
+//BUG: This actually sets the position relative to the parent (which should be 0)
 void SuperBullet::AnimatedSpriteComponent::SetPosition(const Vector2f & position)
 {	
 	Component::SetPosition(position);
 	mAnimatedSprite->setPosition(GetWorldPosition());
+}
+
+void SuperBullet::AnimatedSpriteComponent::SetWorldPosition(const Vector2f & position)
+{
+	Component::SetWorldPosition(position);
+	mAnimatedSprite->setPosition(GetWorldPosition());
+}
+
+void SuperBullet::AnimatedSpriteComponent::SetRotation(const float rotation)
+{
+	Component::SetRotation(rotation);
+	mAnimatedSprite->setRotation(GetWorldRotation());
+}
+
+void SuperBullet::AnimatedSpriteComponent::SetWorldRotation(const float rotation)
+{
+	Component::SetWorldRotation(rotation);
+	mAnimatedSprite->setRotation(GetWorldRotation());
+}
+
+void SuperBullet::AnimatedSpriteComponent::SetAnchorPoint(const Vector2f & point)
+{
+	Vector2f scaledPoint = {
+		point.x * mAnimatedSprite->getLocalBounds().width,
+		point.y * mAnimatedSprite->getLocalBounds().height
+	};
+
+	mAnimatedSprite->setOrigin(scaledPoint);
 }

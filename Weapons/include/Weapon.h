@@ -12,7 +12,7 @@ namespace SuperBullet
         Weapon() = default;
         virtual ~Weapon() = default;
         Weapon(const Weapon& weapon) = default;
-        Weapon& operator=(Weapon& other) = default;
+        Weapon& operator=(const Weapon& other) = default;
         Weapon(Weapon&& weapon) = default;
         Weapon& operator=(Weapon&& other) = default;
 

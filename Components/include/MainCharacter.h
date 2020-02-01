@@ -25,6 +25,7 @@ namespace SuperBullet
 		void Initialize();
 
 		virtual void SetPosition(const Vector2f& position) override;
+		virtual void SetRotation(const float degrees) override;
 
 	private:
 		void InitializeSpriteComponent();
@@ -33,7 +34,6 @@ namespace SuperBullet
 		void InitializeInputComponent();
 
 		void MovementCallback(bool moved);
-		void ShootingCallback();
 
 		std::shared_ptr<InputHandler> mInputHandler;
 

@@ -33,6 +33,12 @@ namespace SuperBullet
 		void Pause();
 
 		void SetPosition(const Vector2f &position) override;
+		void SetWorldPosition(const Vector2f &position) override;
+		
+		void SetRotation(const float rotation) override;
+		void SetWorldRotation(const float rotation) override;
+
+		void SetAnchorPoint(const Vector2f &point);
 
 	private:
 		std::unique_ptr<AnimatedSprite> mAnimatedSprite;

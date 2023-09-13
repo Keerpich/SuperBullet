@@ -1,8 +1,9 @@
 # SuperBullet
 
 ## Prerequisites
-CMake v3.1.2 or greater
-Python 3.X
+- CMake v3.1.2 or greater
+- Python 3.X
+- Conan 1.x
 
 ## Setup
 1. Run `python -m pip install conan`. This installs conan which we will use as a package manager
